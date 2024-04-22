@@ -36,7 +36,7 @@ _fragment=${FRAGMENT:-#branch=main}
   _CMAKE_FLAGS+=( -DWITH_PYTHON_INSTALL=OFF )
 
 pkgname=blender-develop-git
-pkgver=4.2.r133688.g015ae2b3a60
+pkgver=4.2.r135343.gfc08f7491e7
 pkgrel=1
 pkgdesc="Development version of Blender (non-conflicting version)"
 changelog=blender.changelog
@@ -91,7 +91,7 @@ pkgver() {
 
 prepare() {
   # update the submodules
-  make V=1 -C "$srcdir/blender" update_code
+  make V=1 -C "$srcdir/blender" update
   if [ ! -v _cuda_capability ] && grep -q nvidia <(lsmod); then
     git -C "$srcdir/blender" apply -v "${srcdir}"/SelectCudaComputeArch.patch
   fi
