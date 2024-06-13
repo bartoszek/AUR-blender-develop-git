@@ -36,7 +36,7 @@ _fragment=${FRAGMENT:-#branch=main}
   _CMAKE_FLAGS+=( -DWITH_PYTHON_INSTALL=OFF )
 
 pkgname=blender-develop-git
-pkgver=4.2.r135343.gfc08f7491e7
+pkgver=4.3.r137458.g22d352daccf
 pkgrel=1
 pkgdesc="Development version of Blender (non-conflicting version)"
 changelog=blender.changelog
@@ -113,8 +113,11 @@ build() {
       _CMAKE_FLAGS+=( -DCYCLES_CUDA_BINARIES_ARCH="$(IFS=';'; echo "${_cuda_capability[*]}";)" )
     fi
     [ -f "/usr/lib/ccache/bin/nvcc-ccache" ] && export CUDA_NVCC_EXECUTABLE=/usr/lib/ccache/bin/nvcc-ccache
-    if _cuda_gcc=$(basename "$(readlink /opt/cuda/bin/gcc)") ; then
-      [ -L "/usr/lib/ccache/bin/$_cuda_gcc" ] && export CUDAHOSTCXX=/usr/lib/ccache/bin/"$_cuda_gcc"
+    if _cuda_gcc=$(basename "${NVCC_CCBIN}") ; then
+      if [ -L "/usr/lib/ccache/bin/$_cuda_gcc" ]
+        then export CUDAHOSTCXX=/usr/lib/ccache/bin/"$_cuda_gcc"
+        else export CUDAHOSTCXX="$_cuda_gcc"
+      fi
     fi
   fi
 
