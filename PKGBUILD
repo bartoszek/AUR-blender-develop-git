@@ -69,6 +69,8 @@ source=("blender::git+https://github.com/blender/blender${_fragment}"
         blender-sycl-path.patch
         force-draco1.patch
         force-draco2.patch
+        'ffmpeg:7.patch::https://projects.blender.org/blender/blender/pulls/121947'
+        'ffmpeg:7-audaspace.patch::https://projects.blender.org/blender/blender/pulls/121960.diff'
         )
 sha256sums=('SKIP'
             'SKIP'
@@ -78,7 +80,9 @@ sha256sums=('SKIP'
             '60ac315c873a3842dd46393ed351c008255911a8fa352d39587a5eede3983e3a'
             '05e83a1c06790594fcd96f86bac7912d67c91ce9076cfc7088203b37f65949b1'
             'e3ff41269ab26f34e7762ee2754d238af375761131178917f61a97763f60ee0d'
-            'a7c809d2b979e097a1853d42ad0edb6d9fa2ef51c99424257e5ec083ef76bb03')
+            'a7c809d2b979e097a1853d42ad0edb6d9fa2ef51c99424257e5ec083ef76bb03'
+            '17d5fb1c4ddb9e95da590d2e43ae3f7ce2b02c3ec698b16ed2752e3b3e7840c0'
+            '847ffe878ede6ecae505d29a5feba9a998e8857fe99895ed4c2da5aaab813aa8')
 
 pkgver() {
   blender_version=$(grep -Po "BLENDER_VERSION \K[0-9]{3}" "$srcdir"/blender/source/blender/blenkernel/BKE_blender_version.h)
@@ -97,6 +101,7 @@ prepare() {
   fi
   ((DISABLE_DRACO)) || git -C "$srcdir/blender" apply -v "${srcdir}"/force-draco1.patch
   ((DISABLE_DRACO)) || git -C "$srcdir/blender/scripts/addons" apply -v "${srcdir}"/force-draco2.patch
+  git -C "$srcdir/blender" apply -v "${srcdir}"/ffmpeg:7{,-audaspace}.patch
 }
 
 build() {

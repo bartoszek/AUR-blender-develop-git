@@ -63,6 +63,8 @@ pkgbase = blender-develop-git
 	source = blender-sycl-path.patch
 	source = force-draco1.patch
 	source = force-draco2.patch
+	source = ffmpeg:7.patch::https://projects.blender.org/blender/blender/pulls/121947
+	source = ffmpeg:7-audaspace.patch::https://projects.blender.org/blender/blender/pulls/121960.diff
 	sha256sums = SKIP
 	sha256sums = SKIP
 	sha256sums = SKIP
@@ -72,5 +74,7 @@ pkgbase = blender-develop-git
 	sha256sums = 05e83a1c06790594fcd96f86bac7912d67c91ce9076cfc7088203b37f65949b1
 	sha256sums = e3ff41269ab26f34e7762ee2754d238af375761131178917f61a97763f60ee0d
 	sha256sums = a7c809d2b979e097a1853d42ad0edb6d9fa2ef51c99424257e5ec083ef76bb03
+	sha256sums = 17d5fb1c4ddb9e95da590d2e43ae3f7ce2b02c3ec698b16ed2752e3b3e7840c0
+	sha256sums = 847ffe878ede6ecae505d29a5feba9a998e8857fe99895ed4c2da5aaab813aa8
 
 pkgname = blender-develop-git
