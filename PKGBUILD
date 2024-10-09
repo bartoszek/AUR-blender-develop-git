@@ -80,7 +80,7 @@ sha256sums=('SKIP'
             '60ac315c873a3842dd46393ed351c008255911a8fa352d39587a5eede3983e3a'
             '05e83a1c06790594fcd96f86bac7912d67c91ce9076cfc7088203b37f65949b1'
             'be732496196992695df6fa17545c3039bea21d2eb5d86eb38388d514e58cde2a'
-            'd9759a9fba01dc22b902822df5c1e81d382dc200e1395f54997aa1f6488ca57d'
+            '1a3a6ce1bac2c63f90947e6c036da0ee0b2abca851ff3a60964053900666c537'
             'c412bbc777479626c3f18a739454b3b9a55308b6d02a8ee0be6c9adfa08a94a5'
             '847ffe878ede6ecae505d29a5feba9a998e8857fe99895ed4c2da5aaab813aa8')
 
@@ -99,8 +99,7 @@ prepare() {
   if [ ! -v _cuda_capability ] && grep -q nvidia <(lsmod); then
     git -C "$srcdir/blender" apply -v "${srcdir}"/SelectCudaComputeArch.patch
   fi
-  ((DISABLE_DRACO)) || git -C "$srcdir/blender" apply -v "${srcdir}"/force-draco1.patch
-  ((DISABLE_DRACO)) || git -C "$srcdir/blender/scripts/addons_core" apply -v "${srcdir}"/force-draco2.patch
+  ((DISABLE_DRACO)) || git -C "$srcdir/blender" apply -v "${srcdir}"/force-draco{1,2}.patch
   git -C "$srcdir/blender" apply -v "${srcdir}"/ffmpeg:7{,-audaspace}.patch
 }
 

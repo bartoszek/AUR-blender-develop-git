@@ -1,7 +1,7 @@
-diff --git a/io_scene_gltf2/io/com/draco.py b/io_scene_gltf2/io/com/draco.py
-index 58f81125..25e3897b 100644
---- a/io_scene_gltf2/io/com/draco.py
-+++ b/io_scene_gltf2/io/com/draco.py
+diff --git a/scripts/addons_core/io_scene_gltf2/io/com/draco.py b/scripts/addons_core/io_scene_gltf2/io/com/draco.py
+index 046417b42ad..841230935b1 100644
+--- a/scripts/addons_core/io_scene_gltf2/io/com/draco.py
++++ b/scripts/addons_core/io_scene_gltf2/io/com/draco.py
 @@ -3,6 +3,7 @@
  # SPDX-License-Identifier: Apache-2.0
  
@@ -10,7 +10,7 @@ index 58f81125..25e3897b 100644
  import sys
  from pathlib import Path
  import bpy
-@@ -20,7 +21,7 @@ def dll_path() -> Path:
+@@ -18,7 +19,7 @@ def dll_path() -> Path:
      python_lib = Path('{v[0]}.{v[1]}/python/lib'.format(v=bpy.app.version))
      python_version = 'python{v[0]}.{v[1]}'.format(v=sys.version_info)
  

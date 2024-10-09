@@ -1,6 +1,6 @@
 pkgbase = blender-develop-git
 	pkgdesc = Development version of Blender (non-conflicting version)
-	pkgver = 4.4.r142078.gdad7babaae5
+	pkgver = 4.4.r142086.g866f7d7ff0e
 	pkgrel = 1
 	url = https://blender.org/
 	changelog = blender.changelog
@@ -72,8 +72,8 @@ pkgbase = blender-develop-git
 	sha256sums = SKIP
 	sha256sums = 60ac315c873a3842dd46393ed351c008255911a8fa352d39587a5eede3983e3a
 	sha256sums = 05e83a1c06790594fcd96f86bac7912d67c91ce9076cfc7088203b37f65949b1
-	sha256sums = e3ff41269ab26f34e7762ee2754d238af375761131178917f61a97763f60ee0d
-	sha256sums = a7c809d2b979e097a1853d42ad0edb6d9fa2ef51c99424257e5ec083ef76bb03
+	sha256sums = be732496196992695df6fa17545c3039bea21d2eb5d86eb38388d514e58cde2a
+	sha256sums = 1a3a6ce1bac2c63f90947e6c036da0ee0b2abca851ff3a60964053900666c537
 	sha256sums = c412bbc777479626c3f18a739454b3b9a55308b6d02a8ee0be6c9adfa08a94a5
 	sha256sums = 847ffe878ede6ecae505d29a5feba9a998e8857fe99895ed4c2da5aaab813aa8
 
