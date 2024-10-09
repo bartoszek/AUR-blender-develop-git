@@ -1,7 +1,7 @@
-diff --git a/io_scene_gltf2/io/com/gltf2_io_draco_compression_extension.py b/io_scene_gltf2/io/com/gltf2_io_draco_compression_extension.py
+diff --git a/io_scene_gltf2/io/com/draco.py b/io_scene_gltf2/io/com/draco.py
 index 58f81125..25e3897b 100644
---- a/io_scene_gltf2/io/com/gltf2_io_draco_compression_extension.py
-+++ b/io_scene_gltf2/io/com/gltf2_io_draco_compression_extension.py
+--- a/io_scene_gltf2/io/com/draco.py
++++ b/io_scene_gltf2/io/com/draco.py
 @@ -3,6 +3,7 @@
  # SPDX-License-Identifier: Apache-2.0
  

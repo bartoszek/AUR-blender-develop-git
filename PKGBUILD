@@ -36,7 +36,7 @@ _fragment=${FRAGMENT:-#branch=main}
   _CMAKE_FLAGS+=( -DWITH_PYTHON_INSTALL=OFF )
 
 pkgname=blender-develop-git
-pkgver=4.4.r142078.gdad7babaae5
+pkgver=4.4.r142086.g866f7d7ff0e
 pkgrel=1
 pkgdesc="Development version of Blender (non-conflicting version)"
 changelog=blender.changelog
@@ -79,8 +79,8 @@ sha256sums=('SKIP'
             'SKIP'
             '60ac315c873a3842dd46393ed351c008255911a8fa352d39587a5eede3983e3a'
             '05e83a1c06790594fcd96f86bac7912d67c91ce9076cfc7088203b37f65949b1'
-            'e3ff41269ab26f34e7762ee2754d238af375761131178917f61a97763f60ee0d'
-            'a7c809d2b979e097a1853d42ad0edb6d9fa2ef51c99424257e5ec083ef76bb03'
+            'be732496196992695df6fa17545c3039bea21d2eb5d86eb38388d514e58cde2a'
+            'd9759a9fba01dc22b902822df5c1e81d382dc200e1395f54997aa1f6488ca57d'
             'c412bbc777479626c3f18a739454b3b9a55308b6d02a8ee0be6c9adfa08a94a5'
             '847ffe878ede6ecae505d29a5feba9a998e8857fe99895ed4c2da5aaab813aa8')
 
@@ -100,7 +100,7 @@ prepare() {
     git -C "$srcdir/blender" apply -v "${srcdir}"/SelectCudaComputeArch.patch
   fi
   ((DISABLE_DRACO)) || git -C "$srcdir/blender" apply -v "${srcdir}"/force-draco1.patch
-  ((DISABLE_DRACO)) || git -C "$srcdir/blender/scripts/addons" apply -v "${srcdir}"/force-draco2.patch
+  ((DISABLE_DRACO)) || git -C "$srcdir/blender/scripts/addons_core" apply -v "${srcdir}"/force-draco2.patch
   git -C "$srcdir/blender" apply -v "${srcdir}"/ffmpeg:7{,-audaspace}.patch
 }
 
