@@ -36,7 +36,7 @@ _fragment=${FRAGMENT:-#branch=main}
   _CMAKE_FLAGS+=( -DWITH_PYTHON_INSTALL=OFF )
 
 pkgname=blender-develop-git
-pkgver=4.3.r138097.g17ba53f6057
+pkgver=4.4.r142078.gdad7babaae5
 pkgrel=1
 pkgdesc="Development version of Blender (non-conflicting version)"
 changelog=blender.changelog
@@ -81,7 +81,7 @@ sha256sums=('SKIP'
             '05e83a1c06790594fcd96f86bac7912d67c91ce9076cfc7088203b37f65949b1'
             'e3ff41269ab26f34e7762ee2754d238af375761131178917f61a97763f60ee0d'
             'a7c809d2b979e097a1853d42ad0edb6d9fa2ef51c99424257e5ec083ef76bb03'
-            '17d5fb1c4ddb9e95da590d2e43ae3f7ce2b02c3ec698b16ed2752e3b3e7840c0'
+            'c412bbc777479626c3f18a739454b3b9a55308b6d02a8ee0be6c9adfa08a94a5'
             '847ffe878ede6ecae505d29a5feba9a998e8857fe99895ed4c2da5aaab813aa8')
 
 pkgver() {
