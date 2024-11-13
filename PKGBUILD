@@ -36,7 +36,7 @@ _fragment=${FRAGMENT:-#branch=main}
   _CMAKE_FLAGS+=( -DWITH_PYTHON_INSTALL=OFF )
 
 pkgname=blender-develop-git
-pkgver=4.4.r142086.g866f7d7ff0e
+pkgver=4.4.r143465.gb76cc897b65
 pkgrel=1
 pkgdesc="Development version of Blender (non-conflicting version)"
 changelog=blender.changelog
@@ -44,7 +44,7 @@ arch=('i686' 'x86_64')
 url="https://blender.org/"
 depends+=('alembic' 'embree' 'libgl' 'python' python-{numpy,requests} 'openjpeg2' 'libharu' 'potrace' 'openxr'
          'ffmpeg' 'fftw' 'openal' 'freetype2' 'libxi' 'openimageio' 'opencolorio'
-         'openvdb' 'opencollada' 'opensubdiv' 'openshadinglanguage' 'libtiff' 'libpng')
+         'openvdb' 'opensubdiv' 'openshadinglanguage' 'libtiff' 'libpng')
 depends+=('openimagedenoise')
 depends+=('libdecor' 'libepoxy')
 depends+=('openpgl')

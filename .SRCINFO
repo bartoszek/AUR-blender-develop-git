@@ -1,6 +1,6 @@
 pkgbase = blender-develop-git
 	pkgdesc = Development version of Blender (non-conflicting version)
-	pkgver = 4.4.r142086.g866f7d7ff0e
+	pkgver = 4.4.r143465.gb76cc897b65
 	pkgrel = 1
 	url = https://blender.org/
 	changelog = blender.changelog
@@ -41,7 +41,6 @@ pkgbase = blender-develop-git
 	depends = openimageio
 	depends = opencolorio
 	depends = openvdb
-	depends = opencollada
 	depends = opensubdiv
 	depends = openshadinglanguage
 	depends = libtiff
