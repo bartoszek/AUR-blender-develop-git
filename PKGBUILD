@@ -36,7 +36,7 @@ _fragment=${FRAGMENT:-#branch=main}
   _CMAKE_FLAGS+=( -DWITH_PYTHON_INSTALL=OFF )
 
 pkgname=blender-develop-git
-pkgver=4.4.r143465.gb76cc897b65
+pkgver=4.4.r143685.gc51615923b3
 pkgrel=1
 pkgdesc="Development version of Blender (non-conflicting version)"
 changelog=blender.changelog
@@ -70,7 +70,6 @@ source=("blender::git+https://github.com/blender/blender${_fragment}"
         force-draco1.patch
         force-draco2.patch
         'ffmpeg:7.patch::https://projects.blender.org/blender/blender/pulls/121947'
-        'ffmpeg:7-audaspace.patch::https://projects.blender.org/blender/blender/pulls/121960.diff'
         )
 sha256sums=('SKIP'
             'SKIP'
@@ -81,8 +80,7 @@ sha256sums=('SKIP'
             '05e83a1c06790594fcd96f86bac7912d67c91ce9076cfc7088203b37f65949b1'
             'be732496196992695df6fa17545c3039bea21d2eb5d86eb38388d514e58cde2a'
             '1a3a6ce1bac2c63f90947e6c036da0ee0b2abca851ff3a60964053900666c537'
-            'c412bbc777479626c3f18a739454b3b9a55308b6d02a8ee0be6c9adfa08a94a5'
-            '847ffe878ede6ecae505d29a5feba9a998e8857fe99895ed4c2da5aaab813aa8')
+            'd5fe691ea9ff606352477285128d3c743d4702776aa64cef01730b6bd06c200f')
 
 pkgver() {
   blender_version=$(grep -Po "BLENDER_VERSION \K[0-9]{3}" "$srcdir"/blender/source/blender/blenkernel/BKE_blender_version.h)
@@ -100,7 +98,7 @@ prepare() {
     git -C "$srcdir/blender" apply -v "${srcdir}"/SelectCudaComputeArch.patch
   fi
   ((DISABLE_DRACO)) || git -C "$srcdir/blender" apply -v "${srcdir}"/force-draco{1,2}.patch
-  git -C "$srcdir/blender" apply -v "${srcdir}"/ffmpeg:7{,-audaspace}.patch
+  git -C "$srcdir/blender" apply -v "${srcdir}"/ffmpeg:7.patch
 }
 
 build() {

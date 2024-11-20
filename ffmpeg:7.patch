@@ -34,19 +34,19 @@ index 39eb91defd6..fc659d5ad0d 100644
  /** \name Deinterlace code block
   *
 diff --git a/source/blender/imbuf/intern/anim_movie.cc b/source/blender/imbuf/intern/anim_movie.cc
-index a911eb4dac5..fb58eb4fcf8 100644
+index a8824f8d4fb..e1c60847047 100644
 --- a/source/blender/imbuf/intern/anim_movie.cc
 +++ b/source/blender/imbuf/intern/anim_movie.cc
-@@ -656,7 +656,7 @@ static void ffmpeg_decode_store_frame_pts(ImBufAnim *anim)
- {
+@@ -705,7 +705,7 @@ static void ffmpeg_decode_store_frame_pts(ImBufAnim *anim)
    anim->cur_pts = av_get_pts_from_frame(anim->pFrame);
  
+ #  ifdef FFMPEG_OLD_KEY_FRAME_QUERY_METHOD
 -  if (anim->pFrame->key_frame) {
 +  if (av_get_cur_key_frame_pts(anim->pFrame)) {
-     anim->cur_key_frame_pts = anim->cur_pts;
-   }
- 
-@@ -1035,11 +1035,10 @@ static int ffmpeg_seek_to_key_frame(ImBufAnim *anim,
+ #  else
+   if (anim->pFrame->flags & AV_FRAME_FLAG_KEY) {
+ #  endif
+@@ -1027,11 +1027,10 @@ static int ffmpeg_seek_to_key_frame(ImBufAnim *anim,
  
      AVFormatContext *format_ctx = anim->pFormatCtx;
  
