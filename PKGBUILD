@@ -79,7 +79,7 @@ sha256sums=('SKIP'
             '60ac315c873a3842dd46393ed351c008255911a8fa352d39587a5eede3983e3a'
             '05e83a1c06790594fcd96f86bac7912d67c91ce9076cfc7088203b37f65949b1'
             'be732496196992695df6fa17545c3039bea21d2eb5d86eb38388d514e58cde2a'
-            '1a3a6ce1bac2c63f90947e6c036da0ee0b2abca851ff3a60964053900666c537'
+            '9acbc2769d99e6154117bf6f40bbfd558952ce5c2f6bff1e6aa167b0969264ca'
             'd5fe691ea9ff606352477285128d3c743d4702776aa64cef01730b6bd06c200f')
 
 pkgver() {
@@ -168,7 +168,7 @@ package() {
     mv "${pkgdir}/usr/share/doc/blender" "${pkgdir}/usr/share/doc/blender-${_suffix}" || true
 
     msg "add -${_suffix} suffix to man page"
-    ((DISABLE_DRACO)) && mv "${pkgdir}/usr/share/man/man1/blender.1" "${pkgdir}/usr/share/man/man1/blender-${_suffix}.1" || true
+    mv "${pkgdir}/usr/share/man/man1/blender.1" "${pkgdir}/usr/share/man/man1/blender-${_suffix}.1" || true
 
     msg "add -${_suffix} suffix to all icons"
     while read -r icon
