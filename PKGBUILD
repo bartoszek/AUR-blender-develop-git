@@ -67,9 +67,6 @@ source=("blender::git+https://github.com/blender/blender${_fragment}"
         'blender-dev-tools::git+https://github.com/blender/blender-dev-tools'
         SelectCudaComputeArch.patch
         blender-sycl-path.patch
-        force-draco1.patch
-        force-draco2.patch
-        'ffmpeg:7.patch::https://projects.blender.org/blender/blender/pulls/121947'
         )
 sha256sums=('SKIP'
             'SKIP'
@@ -77,10 +74,7 @@ sha256sums=('SKIP'
             'SKIP'
             'SKIP'
             '60ac315c873a3842dd46393ed351c008255911a8fa352d39587a5eede3983e3a'
-            '05e83a1c06790594fcd96f86bac7912d67c91ce9076cfc7088203b37f65949b1'
-            'be732496196992695df6fa17545c3039bea21d2eb5d86eb38388d514e58cde2a'
-            '9acbc2769d99e6154117bf6f40bbfd558952ce5c2f6bff1e6aa167b0969264ca'
-            'd5fe691ea9ff606352477285128d3c743d4702776aa64cef01730b6bd06c200f')
+            '05e83a1c06790594fcd96f86bac7912d67c91ce9076cfc7088203b37f65949b1')
 
 pkgver() {
   blender_version=$(grep -Po "BLENDER_VERSION \K[0-9]{3}" "$srcdir"/blender/source/blender/blenkernel/BKE_blender_version.h)
@@ -97,8 +91,6 @@ prepare() {
   if [ ! -v _cuda_capability ] && grep -q nvidia <(lsmod); then
     git -C "$srcdir/blender" apply -v "${srcdir}"/SelectCudaComputeArch.patch
   fi
-  ((DISABLE_DRACO)) || git -C "$srcdir/blender" apply -v "${srcdir}"/force-draco{1,2}.patch
-  git -C "$srcdir/blender" apply -v "${srcdir}"/ffmpeg:7.patch
 }
 
 build() {
@@ -145,12 +137,6 @@ package() {
   python -m compileall "${pkgdir}/usr/share/blender"
   python -O -m compileall "${pkgdir}/usr/share/blender"
 
-  # Manually install draco bindings (See FS#73415)
-  ((DISABLE_DRACO)) || {
-  mkdir -p "${pkgdir}/usr/lib/python${_pyver}"/
-  mv "${pkgdir}"/usr/share/blender/4*/python/lib/* "${pkgdir}"/usr/lib/
-  rm -r "${pkgdir}"/usr/share/blender/4*/python
-  }
 
   # Move OneAPI AOT lib to proper place
 # mv "${pkgdir}"/usr/share/blender/lib/libcycles_kernel_oneapi_aot.so "${pkgdir}"/usr/lib/
