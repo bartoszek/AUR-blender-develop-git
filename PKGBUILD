@@ -36,7 +36,7 @@ _fragment=${FRAGMENT:-#branch=main}
   _CMAKE_FLAGS+=( -DWITH_PYTHON_INSTALL=OFF )
 
 pkgname=blender-develop-git
-pkgver=4.4.r143685.gc51615923b3
+pkgver=4.4.r144211.g59266547561
 pkgrel=1
 pkgdesc="Development version of Blender (non-conflicting version)"
 changelog=blender.changelog
@@ -66,15 +66,13 @@ source=("blender::git+https://github.com/blender/blender${_fragment}"
         'blender-translations::git+https://github.com/blender/blender-translations'
         'blender-dev-tools::git+https://github.com/blender/blender-dev-tools'
         SelectCudaComputeArch.patch
-        blender-sycl-path.patch
         )
 sha256sums=('SKIP'
             'SKIP'
             'SKIP'
             'SKIP'
             'SKIP'
-            '60ac315c873a3842dd46393ed351c008255911a8fa352d39587a5eede3983e3a'
-            '05e83a1c06790594fcd96f86bac7912d67c91ce9076cfc7088203b37f65949b1')
+            '60ac315c873a3842dd46393ed351c008255911a8fa352d39587a5eede3983e3a')
 
 pkgver() {
   blender_version=$(grep -Po "BLENDER_VERSION \K[0-9]{3}" "$srcdir"/blender/source/blender/blenkernel/BKE_blender_version.h)

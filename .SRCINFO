@@ -1,6 +1,6 @@
 pkgbase = blender-develop-git
 	pkgdesc = Development version of Blender (non-conflicting version)
-	pkgver = 4.4.r143685.gc51615923b3
+	pkgver = 4.4.r144211.g59266547561
 	pkgrel = 1
 	url = https://blender.org/
 	changelog = blender.changelog
@@ -59,13 +59,11 @@ pkgbase = blender-develop-git
 	source = blender-translations::git+https://github.com/blender/blender-translations
 	source = blender-dev-tools::git+https://github.com/blender/blender-dev-tools
 	source = SelectCudaComputeArch.patch
-	source = blender-sycl-path.patch
 	sha256sums = SKIP
 	sha256sums = SKIP
 	sha256sums = SKIP
 	sha256sums = SKIP
 	sha256sums = SKIP
 	sha256sums = 60ac315c873a3842dd46393ed351c008255911a8fa352d39587a5eede3983e3a
-	sha256sums = 05e83a1c06790594fcd96f86bac7912d67c91ce9076cfc7088203b37f65949b1
 
 pkgname = blender-develop-git
