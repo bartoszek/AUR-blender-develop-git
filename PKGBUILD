@@ -113,6 +113,7 @@ build() {
   cmake -G "$generator" -S "$srcdir/blender" -B "$srcdir/build" \
         -C "${srcdir}/blender/build_files/cmake/config/blender_release.cmake" \
         -DWITH_LINKER_MOLD=ON \
+        -DWITH_CYCLES_OSL=ON \
         -DCMAKE_INSTALL_PREFIX=/usr \
         -DCMAKE_BUILD_TYPE=Release \
         -DWITH_INSTALL_PORTABLE=OFF \
