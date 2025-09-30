@@ -49,7 +49,7 @@ depends+=('openimagedenoise')
 depends+=('libdecor' 'libepoxy')
 depends+=('openpgl')
 depends+=('shaderc')
-makedepends+=('git' 'git-lfs' 'cmake' 'clang' 'boost' 'mesa' 'llvm' wayland{,-protocols} 'vulkan-headers' 'libxkbcommon')
+makedepends+=('git' 'git-lfs' 'cmake' 'clang' 'boost' 'mesa' 'llvm' 'mold' wayland{,-protocols} 'vulkan-headers' 'libxkbcommon')
 makedepends+=('wayland-protocols')
 makedepends+=('cython')
 provides=("blender=${pkgver%%.r*}")
@@ -108,6 +108,7 @@ build() {
   ((DISABLE_NINJA)) && generator="Unix Makefiles" || generator="Ninja"
   cmake -G "$generator" -S "$srcdir/blender" -B "$srcdir/build" \
         -C "${srcdir}/blender/build_files/cmake/config/blender_release.cmake" \
+        -DWITH_LINKER_MOLD=ON \
         -DCMAKE_INSTALL_PREFIX=/usr \
         -DCMAKE_BUILD_TYPE=Release \
         -DWITH_INSTALL_PORTABLE=OFF \

@@ -15,6 +15,7 @@ pkgbase = blender-develop-git
 	makedepends = boost
 	makedepends = mesa
 	makedepends = llvm
+	makedepends = mold
 	makedepends = wayland
 	makedepends = wayland-protocols
 	makedepends = vulkan-headers
