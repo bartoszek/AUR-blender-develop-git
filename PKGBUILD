@@ -28,8 +28,12 @@ _fragment=${FRAGMENT:-#branch=main}
 #shellcheck disable=SC2015
 ((DISABLE_CUDA)) && optdepends+=('cuda: CUDA support in Cycles') || { makedepends+=('cuda') ; ((DISABLE_OPTIX)) || makedepends+=('optix>=8.0'); }
 ((DISABLE_HIP)) || {
-  makedepends+=('hip-runtime-amd')
-  _CMAKE_FLAGS+=( -DHIP_ROOT_DIR=/opt/rocm )
+  makedepends+=('hip-runtime-amd' 'hiprt')
+  optdepends+=('hip-runtime-amd: Cycles renderer AMD ROCm support' \
+               'hiprt: Ray tracing AMD ROCm support')
+  _CMAKE_FLAGS+=( -DHIP_ROOT_DIR=/opt/rocm
+                  -DHIPRT_INCLUDE_DIR=/opt/rocm/include
+                  -DHIPRT_COMPILER_PARALLEL_JOBS="$(nproc)" )
 }
 ((ENABLE_PYTHON_INSTALL)) && \
   _CMAKE_FLAGS+=( -DWITH_PYTHON_INSTALL=ON ) || \
