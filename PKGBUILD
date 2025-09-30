@@ -35,6 +35,12 @@ _fragment=${FRAGMENT:-#branch=main}
                   -DHIPRT_INCLUDE_DIR=/opt/rocm/include
                   -DHIPRT_COMPILER_PARALLEL_JOBS="$(nproc)" )
 }
+((DISABLE_ONEAPI)) || {
+  makedepends+=(intel-oneapi-compiler-{dpcpp-cpp,shared}-runtime-libs)
+  optdepends+=('intel-compute-runtime: Cycles renderer Intel OneAPI support')
+  _CMAKE_FLAGS+=( -DOCLOC_INSTALL_DIR=/usr )
+}
+
 ((ENABLE_PYTHON_INSTALL)) && \
   _CMAKE_FLAGS+=( -DWITH_PYTHON_INSTALL=ON ) || \
   _CMAKE_FLAGS+=( -DWITH_PYTHON_INSTALL=OFF )
@@ -135,7 +141,7 @@ package() {
 
 
   # Move OneAPI AOT lib to proper place
-# mv "${pkgdir}"/usr/share/blender/lib/libcycles_kernel_oneapi_aot.so "${pkgdir}"/usr/lib/
+  mv "${pkgdir}"/usr/share/blender/lib/libcycles_kernel_oneapi_aot.so "${pkgdir}"/usr/lib/ || warning "OneAPI AOT lib not found!"
 
     msg "add -${_suffix} suffix to desktop shortcut"
     sed -i "s/=blender/=blender-${_suffix}/g" "${pkgdir}/usr/share/applications/blender.desktop"
