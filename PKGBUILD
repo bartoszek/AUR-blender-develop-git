@@ -36,9 +36,15 @@ _fragment=${FRAGMENT:-#branch=main}
                   -DHIPRT_COMPILER_PARALLEL_JOBS="$(nproc)" )
 }
 ((DISABLE_ONEAPI)) || {
-  makedepends+=(intel-oneapi-compiler-{dpcpp-cpp,shared}-runtime-libs)
+  makedepends+=('intel-oneapi-compiler-shared-runtime'
+                'intel-oneapi-dpcpp-cpp'
+                'intel-compute-runtime'
+                'level-zero-headers' )
   optdepends+=('intel-compute-runtime: Cycles renderer Intel OneAPI support')
-  _CMAKE_FLAGS+=( -DOCLOC_INSTALL_DIR=/usr )
+  _CMAKE_FLAGS+=( -DOCLOC_INSTALL_DIR=/usr
+                  -DSYCL_CPP_FLAGS="--verbose"  # for debugging
+                  -DSYCL_ROOT_DIR=/opt/intel/oneapi/compiler/latest
+                  -DSYCL_OFFLINE_COMPILER_PARALLEL_JOBS=8 )
 }
 
 ((ENABLE_PYTHON_INSTALL)) && \
