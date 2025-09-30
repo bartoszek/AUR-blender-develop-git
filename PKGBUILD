@@ -46,7 +46,7 @@ _fragment=${FRAGMENT:-#branch=main}
   _CMAKE_FLAGS+=( -DWITH_PYTHON_INSTALL=OFF )
 
 pkgname=blender-develop-git
-pkgver=5.0.r154310.ga59be80d380
+pkgver=5.0.r154313.g8697bffe22d
 pkgrel=1
 pkgdesc="Development version of Blender (non-conflicting version)"
 changelog=blender.changelog
@@ -59,6 +59,7 @@ depends+=('openimagedenoise')
 depends+=('libdecor' 'libepoxy')
 depends+=('openpgl')
 depends+=('shaderc')
+depends+=('manifold')
 makedepends+=('git' 'git-lfs' 'cmake' 'clang' 'boost' 'mesa' 'llvm' 'mold' wayland{,-protocols} 'vulkan-headers' 'libxkbcommon')
 makedepends+=('wayland-protocols')
 makedepends+=('cython')

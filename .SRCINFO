@@ -1,6 +1,6 @@
 pkgbase = blender-develop-git
 	pkgdesc = Development version of Blender (non-conflicting version)
-	pkgver = 5.0.r154310.ga59be80d380
+	pkgver = 5.0.r154313.g8697bffe22d
 	pkgrel = 1
 	url = https://blender.org/
 	changelog = blender.changelog
@@ -51,6 +51,7 @@ pkgbase = blender-develop-git
 	depends = libepoxy
 	depends = openpgl
 	depends = shaderc
+	depends = manifold
 	optdepends = cuda: CUDA support in Cycles
 	provides = blender=5.0
 	conflicts = blender=5.0
