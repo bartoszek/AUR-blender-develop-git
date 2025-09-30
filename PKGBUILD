@@ -36,7 +36,7 @@ _fragment=${FRAGMENT:-#branch=main}
   _CMAKE_FLAGS+=( -DWITH_PYTHON_INSTALL=OFF )
 
 pkgname=blender-develop-git
-pkgver=5.0.r154221.g305304e16c4
+pkgver=5.0.r154310.ga59be80d380
 pkgrel=1
 pkgdesc="Development version of Blender (non-conflicting version)"
 changelog=blender.changelog
@@ -61,17 +61,9 @@ license=('GPL')
 # More info:
 #   http://wiki.blender.org/index.php/Dev:Doc/Tools/Git
 source=("blender::git+https://github.com/blender/blender${_fragment}"
-        'blender-addons::git+https://github.com/blender/blender-addons'
-        'blender-addons-contrib::git+https://github.com/blender/blender-addons-contrib'
-        'blender-translations::git+https://github.com/blender/blender-translations'
-        'blender-dev-tools::git+https://github.com/blender/blender-dev-tools'
         SelectCudaComputeArch.patch
         )
 sha256sums=('SKIP'
-            'SKIP'
-            'SKIP'
-            'SKIP'
-            'SKIP'
             '60ac315c873a3842dd46393ed351c008255911a8fa352d39587a5eede3983e3a')
 
 pkgver() {
@@ -84,7 +76,7 @@ pkgver() {
 }
 
 prepare() {
-  # update the submodules
+  # fetch git-lfs assets
   make V=1 -C "$srcdir/blender" update_code
   if [ ! -v _cuda_capability ] && grep -q nvidia <(lsmod); then
     git -C "$srcdir/blender" apply -v "${srcdir}"/SelectCudaComputeArch.patch
