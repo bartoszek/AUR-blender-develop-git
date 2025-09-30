@@ -26,7 +26,7 @@ _fragment=${FRAGMENT:-#branch=main}
 }
 ((DISABLE_NINJA)) || { makedepends+=('ninja'); : ${MAKEFLAGS:--j1}; }
 #shellcheck disable=SC2015
-((DISABLE_CUDA)) && optdepends+=('cuda: CUDA support in Cycles') || { makedepends+=('cuda') ; ((DISABLE_OPTIX)) || makedepends+=('optix>=7.4'); }
+((DISABLE_CUDA)) && optdepends+=('cuda: CUDA support in Cycles') || { makedepends+=('cuda') ; ((DISABLE_OPTIX)) || makedepends+=('optix>=8.0'); }
 ((DISABLE_HIP)) || {
   makedepends+=('hip-runtime-amd')
   _CMAKE_FLAGS+=( -DHIP_ROOT_DIR=/opt/rocm )
