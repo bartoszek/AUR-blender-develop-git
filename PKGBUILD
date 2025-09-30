@@ -52,7 +52,7 @@ _fragment=${FRAGMENT:-#branch=main}
   _CMAKE_FLAGS+=( -DWITH_PYTHON_INSTALL=OFF )
 
 pkgname=blender-develop-git
-pkgver=5.0.r154313.g8697bffe22d
+pkgver=5.0.r154332.g74b1b952183
 pkgrel=1
 pkgdesc="Development version of Blender (non-conflicting version)"
 changelog=blender.changelog
@@ -66,7 +66,7 @@ depends+=('libdecor' 'libepoxy')
 depends+=('openpgl')
 depends+=('shaderc')
 depends+=('manifold')
-makedepends+=('git' 'git-lfs' 'cmake' 'clang' 'boost' 'mesa' 'llvm' 'mold' wayland{,-protocols} 'vulkan-headers' 'libxkbcommon')
+makedepends+=('git' 'git-lfs' 'cmake' 'clang' 'boost' 'mesa' 'llvm' 'mold' 'patchelf' wayland{,-protocols} 'vulkan-headers' 'libxkbcommon')
 makedepends+=('wayland-protocols')
 makedepends+=('cython')
 provides=("blender=${pkgver%%.r*}")
@@ -147,8 +147,8 @@ package() {
   python -O -m compileall "${pkgdir}/usr/share/blender"
 
 
-  # Move OneAPI AOT lib to proper place
-  mv "${pkgdir}"/usr/share/blender/lib/libcycles_kernel_oneapi_aot.so "${pkgdir}"/usr/lib/ || warning "OneAPI AOT lib not found!"
+  # patch blender runpath for the OneAPI AOT lib actual location
+  patchelf --set-rpath '$ORIGIN/../share/blender/lib/' ${pkgdir}/usr/bin/blender
 
     msg "add -${_suffix} suffix to desktop shortcut"
     sed -i "s/=blender/=blender-${_suffix}/g" "${pkgdir}/usr/share/applications/blender.desktop"
