@@ -133,7 +133,7 @@ build() {
         -DXR_OPENXR_SDK_ROOT_DIR=/usr \
         -DPYTHON_VERSION="${_pyver}" \
         "${_CMAKE_FLAGS[@]}"
-  export NINJA_STATUS="[%p | %f<%r<%u | %cbps ] "
+  export NINJA_STATUS="[%p | %f<%r<%u | %cbps | %W] "
 # shellcheck disable=SC2086 # allow MAKEFLAGS to split when multiple flags provided.
   cmake --build build ${MAKEFLAGS}
 }
