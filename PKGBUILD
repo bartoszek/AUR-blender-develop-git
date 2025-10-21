@@ -36,8 +36,8 @@ _fragment=${FRAGMENT:-#branch=main}
                   -DHIPRT_COMPILER_PARALLEL_JOBS="$(nproc)" )
 }
 ((DISABLE_ONEAPI)) || {
-  makedepends+=('intel-oneapi-compiler-shared-runtime'
-                'intel-oneapi-dpcpp-cpp'
+  makedepends+=('intel-oneapi-compiler-shared-runtime>=2025.3'
+                'intel-oneapi-dpcpp-cpp>=2025.3'
                 'intel-compute-runtime'
                 'level-zero-headers' )
   optdepends+=('intel-compute-runtime: Cycles renderer Intel OneAPI support')
