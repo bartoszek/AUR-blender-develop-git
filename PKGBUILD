@@ -64,7 +64,7 @@ _fragment=${FRAGMENT:-#branch=main}
   _CMAKE_FLAGS+=( -DWITH_PYTHON_INSTALL=OFF )
 
 pkgname=blender-develop-git
-pkgver=5.0.r154332.g74b1b952183
+pkgver=5.1.r155262.g157ec097d74
 pkgrel=1
 pkgdesc="Development version of Blender (non-conflicting version)"
 changelog=blender.changelog
