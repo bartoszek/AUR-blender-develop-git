@@ -33,7 +33,10 @@ _fragment=${FRAGMENT:-#branch=main}
   makedepends+=('cuda=12.9.1')
   ((DISABLE_OPTIX)) && _CMAKE_FLAGS+=( -DWITH_CYCLES_DEVICE_OPTIX=OFF ) || makedepends+=('optix>=8.0')
 }
-((DISABLE_HIP)) || {
+((DISABLE_HIP)) && {
+  _CMAKE_FLAGS+=( -DWITH_CYCLES_DEVICE_HIP=OFF \
+                  -DWITH_CYCLES_DEVICE_HIP_DYNLOAD=OFF )
+} || {
   makedepends+=('hip-runtime-amd' 'hiprt')
   optdepends+=('hip-runtime-amd: Cycles renderer AMD ROCm support' \
                'hiprt: Ray tracing AMD ROCm support')
@@ -41,7 +44,10 @@ _fragment=${FRAGMENT:-#branch=main}
                   -DHIPRT_INCLUDE_DIR=/opt/rocm/include
                   -DHIPRT_COMPILER_PARALLEL_JOBS="$(nproc)" )
 }
-((DISABLE_ONEAPI)) || {
+((DISABLE_ONEAPI)) && {
+  _CMAKE_FLAGS+=( -DWITH_CYCLES_DEVICE_ONEAPI=OFF \
+                  -DWITH_CYCLES_ONEAPI_BINARIES=OFF )
+} || {
   makedepends+=('intel-oneapi-compiler-shared-runtime>=2025.3'
                 'intel-oneapi-dpcpp-cpp>=2025.3'
                 'intel-compute-runtime'
