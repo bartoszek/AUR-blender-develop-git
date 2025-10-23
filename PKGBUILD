@@ -3,6 +3,8 @@
 
 # Configuration.
 _fragment=${FRAGMENT:-#branch=main}
+_git_revert=(72f098248d41fc92e9275c5f33357117ba66e54e
+             49414a72f607ccd15f8b71b81edc9aff040d581e)
 # Use CMAKE_FLAGS=xxx:yyy:zzz to define extra CMake flags
 [[ -v CMAKE_FLAGS ]] && mapfile -t -d: CMAKE_FLAGS < <(echo -n "$CMAKE_FLAGS")
 # shellcheck disable=SC2206
@@ -48,8 +50,8 @@ _fragment=${FRAGMENT:-#branch=main}
   _CMAKE_FLAGS+=( -DWITH_CYCLES_DEVICE_ONEAPI=OFF \
                   -DWITH_CYCLES_ONEAPI_BINARIES=OFF )
 } || {
-  makedepends+=('intel-oneapi-compiler-shared-runtime>=2025.3'
-                'intel-oneapi-dpcpp-cpp>=2025.3'
+  makedepends+=('intel-oneapi-compiler-shared-runtime'
+                'intel-oneapi-dpcpp-cpp'
                 'intel-compute-runtime'
                 'level-zero-headers' )
   optdepends+=('intel-compute-runtime: Cycles renderer Intel OneAPI support')
@@ -64,7 +66,7 @@ _fragment=${FRAGMENT:-#branch=main}
   _CMAKE_FLAGS+=( -DWITH_PYTHON_INSTALL=OFF )
 
 pkgname=blender-develop-git
-pkgver=5.1.r155262.g157ec097d74
+pkgver=5.1.r155353.g0b7e9a60b51
 pkgrel=1
 pkgdesc="Development version of Blender (non-conflicting version)"
 changelog=blender.changelog
@@ -110,6 +112,7 @@ prepare() {
   if [ ! -v _cuda_capability ] && grep -q nvidia <(lsmod); then
     git -C "$srcdir/blender" apply -v "${srcdir}"/SelectCudaComputeArch.patch
   fi
+  [[ -v _git_revert ]] && git -C "${srcdir}"/blender revert --no-commit "${_git_revert[@]}"
 }
 
 build() {
