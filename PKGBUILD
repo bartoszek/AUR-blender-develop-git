@@ -30,7 +30,7 @@ _fragment=${FRAGMENT:-#branch=main}
   optdepends+=('cuda: CUDA support in Cycles') 
   _CMAKE_FLAGS+=( -DWITH_CYCLES_DEVICE_CUDA=OFF )
 } || { 
-  makedepends+=('cuda=12.9.1')
+  makedepends+=('cuda')
   ((DISABLE_OPTIX)) && _CMAKE_FLAGS+=( -DWITH_CYCLES_DEVICE_OPTIX=OFF ) || makedepends+=('optix>=8.0')
 }
 ((DISABLE_HIP)) && {
