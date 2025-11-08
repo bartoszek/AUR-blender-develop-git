@@ -8,7 +8,7 @@ _git_revert=(72f098248d41fc92e9275c5f33357117ba66e54e
 # Use CMAKE_FLAGS=xxx:yyy:zzz to define extra CMake flags
 [[ -v CMAKE_FLAGS ]] && mapfile -t -d: CMAKE_FLAGS < <(echo -n "$CMAKE_FLAGS")
 # shellcheck disable=SC2206
-[[ -v CUDA_ARCH ]] && _cuda_capability=(${CUDA_ARCH})
+[[ -v CUDA_ARCH ]] && _CMAKE_FLAGS+=("-DCYCLES_CUDA_BINARIES_ARCH=${CUDA_ARCH}")
 [[ -v HIP_ARCH  ]] && _CMAKE_FLAGS+=("-DCYCLES_HIP_BINARIES_ARCH=${HIP_ARCH}")
 
 #some extra, unofficially supported stuff goes here:
@@ -30,24 +30,36 @@ _git_revert=(72f098248d41fc92e9275c5f33357117ba66e54e
 #shellcheck disable=SC2015
 ((DISABLE_CUDA)) && { 
   optdepends+=('cuda: CUDA support in Cycles') 
-  _CMAKE_FLAGS+=( -DWITH_CYCLES_DEVICE_CUDA=OFF )
-} || { 
+  _CMAKE_FLAGS+=( -DWITH_CYCLES_DEVICE_CUDA=OFF
+                  -DWITH_CYCLES_CUDA_BINARIES=OFF
+                  -DWITH_CYCLES_DEVICE_OPTIX=OFF
+                  -DWITH_CUDA_DYNLOAD=ON )
+} || {
   makedepends+=('cuda')
-  ((DISABLE_OPTIX)) && _CMAKE_FLAGS+=( -DWITH_CYCLES_DEVICE_OPTIX=OFF ) || makedepends+=('optix>=8.0')
+  _CMAKE_FLAGS+=( -DWITH_CYCLES_CUDA_BINARIES=ON
+                  -DCUDA_TOOLKIT_ROOT_DIR=/opt/cuda )
+  ((DISABLE_OPTIX)) && {
+    _CMAKE_FLAGS+=( -DWITH_CYCLES_DEVICE_OPTIX=OFF )
+  } || {
+    _CMAKE_FLAGS+=( -DWITH_CYCLES_DEVICE_OPTIX=ON
+                    -DOPTIX_ROOT_DIR=/opt/optix )
+    makedepends+=('optix>=8.0')
+  }
 }
 ((DISABLE_HIP)) && {
-  _CMAKE_FLAGS+=( -DWITH_CYCLES_DEVICE_HIP=OFF \
-                  -DWITH_CYCLES_DEVICE_HIP_DYNLOAD=OFF )
+  _CMAKE_FLAGS+=( -DWITH_CYCLES_DEVICE_HIP{,RT}=OFF
+                  -DWITH_CYCLES_HIP_BINARIES=OFF
+                  -DWITH_HIP_DYNLOAD=ON )
 } || {
   makedepends+=('hip-runtime-amd' 'hiprt')
-  optdepends+=('hip-runtime-amd: Cycles renderer AMD ROCm support' \
+  optdepends+=('hip-runtime-amd: Cycles renderer AMD ROCm support'
                'hiprt: Ray tracing AMD ROCm support')
   _CMAKE_FLAGS+=( -DHIP_ROOT_DIR=/opt/rocm
                   -DHIPRT_INCLUDE_DIR=/opt/rocm/include
                   -DHIPRT_COMPILER_PARALLEL_JOBS="$(nproc)" )
 }
 ((DISABLE_ONEAPI)) && {
-  _CMAKE_FLAGS+=( -DWITH_CYCLES_DEVICE_ONEAPI=OFF \
+  _CMAKE_FLAGS+=( -DWITH_CYCLES_DEVICE_ONEAPI=OFF
                   -DWITH_CYCLES_ONEAPI_BINARIES=OFF )
 } || {
   makedepends+=('intel-oneapi-compiler-shared-runtime'
@@ -66,7 +78,7 @@ _git_revert=(72f098248d41fc92e9275c5f33357117ba66e54e
   _CMAKE_FLAGS+=( -DWITH_PYTHON_INSTALL=OFF )
 
 pkgname=blender-develop-git
-pkgver=5.1.r155353.g0b7e9a60b51
+pkgver=5.1.r156007.g6909397f4ad
 pkgrel=1
 pkgdesc="Development version of Blender (non-conflicting version)"
 changelog=blender.changelog
@@ -109,7 +121,7 @@ pkgver() {
 prepare() {
   # fetch git-lfs assets
   make V=1 -C "$srcdir/blender" update_code
-  if [ ! -v _cuda_capability ] && grep -q nvidia <(lsmod); then
+  if [ ! -v CUDA_ARCH ] && ((! DISABLE_CUDA)) && grep -q nvidia <(lsmod); then
     git -C "$srcdir/blender" apply -v "${srcdir}"/SelectCudaComputeArch.patch
   fi
   [[ -v _git_revert ]] && git -C "${srcdir}"/blender revert --no-commit "${_git_revert[@]}"
@@ -119,15 +131,7 @@ build() {
   _pyver=$(python -c "from sys import version_info; print(\"%d.%d\" % (version_info[0],version_info[1]))")
   msg "python version detected: ${_pyver}"
 
-  # determine whether we can precompile CUDA kernels
-  _CUDA_PKG=$(pacman -Qq cuda 2>/dev/null) || true
-  if [ "$_CUDA_PKG" != "" ] && ! ((DISABLE_CUDA)) ; then
-    _CMAKE_FLAGS+=( -DWITH_CYCLES_CUDA_BINARIES=ON
-                  -DCUDA_TOOLKIT_ROOT_DIR=/opt/cuda )
-    ((DISABLE_OPTIX)) || _CMAKE_FLAGS+=( -DOPTIX_ROOT_DIR=/opt/optix )
-    if [[ -v _cuda_capability ]]; then
-      _CMAKE_FLAGS+=( -DCYCLES_CUDA_BINARIES_ARCH="$(IFS=';'; echo "${_cuda_capability[*]}";)" )
-    fi
+  ((DISABLE_CUDA)) || {
     [ -f "/usr/lib/ccache/bin/nvcc-ccache" ] && export CUDA_NVCC_EXECUTABLE=/usr/lib/ccache/bin/nvcc-ccache
     if _cuda_gcc=$(basename "${NVCC_CCBIN}") ; then
       if [ -L "/usr/lib/ccache/bin/$_cuda_gcc" ]
@@ -135,7 +139,7 @@ build() {
         else export CUDAHOSTCXX="$_cuda_gcc"
       fi
     fi
-  fi
+  }
 
   ((DISABLE_NINJA)) && generator="Unix Makefiles" || generator="Ninja"
   cmake -G "$generator" -S "$srcdir/blender" -B "$srcdir/build" \
