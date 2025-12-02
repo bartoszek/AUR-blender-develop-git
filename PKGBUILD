@@ -3,8 +3,7 @@
 
 # Configuration.
 _fragment=${FRAGMENT:-#branch=main}
-_git_revert=(72f098248d41fc92e9275c5f33357117ba66e54e
-             49414a72f607ccd15f8b71b81edc9aff040d581e)
+_git_revert=(49414a72f607ccd15f8b71b81edc9aff040d581e)
 # Use CMAKE_FLAGS=xxx:yyy:zzz to define extra CMake flags
 [[ -v CMAKE_FLAGS ]] && mapfile -t -d: CMAKE_FLAGS < <(echo -n "$CMAKE_FLAGS")
 # shellcheck disable=SC2206
@@ -78,7 +77,7 @@ _git_revert=(72f098248d41fc92e9275c5f33357117ba66e54e
   _CMAKE_FLAGS+=( -DWITH_PYTHON_INSTALL=OFF )
 
 pkgname=blender-develop-git
-pkgver=5.1.r156007.g6909397f4ad
+pkgver=5.1.r156658.gbd877983732
 pkgrel=1
 pkgdesc="Development version of Blender (non-conflicting version)"
 changelog=blender.changelog
