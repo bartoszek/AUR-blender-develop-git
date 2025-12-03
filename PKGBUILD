@@ -77,7 +77,7 @@ _git_revert=(49414a72f607ccd15f8b71b81edc9aff040d581e)
   _CMAKE_FLAGS+=( -DWITH_PYTHON_INSTALL=OFF )
 
 pkgname=blender-develop-git
-pkgver=5.1.r156658.gbd877983732
+pkgver=5.1.r156713.g19891e0faa6
 pkgrel=1
 pkgdesc="Development version of Blender (non-conflicting version)"
 changelog=blender.changelog
@@ -124,6 +124,8 @@ prepare() {
     git -C "$srcdir/blender" apply -v "${srcdir}"/SelectCudaComputeArch.patch
   fi
   [[ -v _git_revert ]] && git -C "${srcdir}"/blender revert --no-commit "${_git_revert[@]}"
+# remove deprecated headers in rocm:7
+sed -e '/Geometry.h/d' -e '/Scene.h/d' -i "$srcdir"/blender/intern/cycles/kernel/CMakeLists.txt
 }
 
 build() {
